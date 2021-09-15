@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Hogwarts</title>
+    <link rel="stylesheet" href="hogwarts.css" />
+  </head>
+  <body>
+    <section id="left_side">
+      <h1 id="title"></h1>
+      <p>
+        Filter By: <br />
+        <button class="filter" data-action="filter" data-filter="slytherin">Slytherin</button>
+        <button class="filter" data-action="filter" data-filter="hufflepuff">Hufflepuff</button>
+        <button class="filter" data-action="filter" data-filter="ravenclaw">Ravenclaw</button>
+        <button class="filter" data-action="filter" data-filter="gryffindor">Gryffindor</button>
+        <button class="filter" data-action="filter" data-filter="expelled">Expelled</button>
+        <button class="filter" data-action="filter" data-filter="*">All</button>
+      </p>
+
+      <p>
+        Sort By: <br />
+        <button class="sort" data-action="sort" data-sort-direction="asc" data-sort="firstname">First Name</button>
+        <button class="sort" data-action="sort" data-sort-direction="asc" data-sort="lastname">Last Name</button>
+        <button class="sort" data-action="sort" data-sort-direction="asc" data-sort="house">House</button>
+      </p>
+    </section>
+
+    <section id="right_side">
+      <template id="student">
+        <tr>
+          <td data-field="expelled" data-expelled="false"></td>
+          <td data-field="firstname">First Name</td>
+          <td data-field="lastname">Last Name</td>
+          <td data-field="house">House</td>
+        </tr>
+      </template>
+    </section>
+
+    <script src="hogwarts.js"></script>
+  </body>
+</html>
