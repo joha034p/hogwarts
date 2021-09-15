@@ -1,0 +1,22 @@
+body {
+  margin: 0;
+}
+
+#left_side,
+#right_side {
+  border: 1px solid black;
+}
+
+#left_side {
+  width: 30%;
+  height: 100vh;
+}
+
+#right_side {
+  width: 70%;
+  height: 100%;
+}
+
+#section_wrapper {
+  display: flex;
+}
