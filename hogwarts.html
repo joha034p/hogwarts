@@ -10,7 +10,7 @@
   <body>
     <div id="section_wrapper">
       <section id="left_side">
-        This is the left side
+        <p>This is the left side</p>
         <h1 id="title">Hogwarts Students</h1>
         <p>
           Filter By: <br />
@@ -31,14 +31,16 @@
       </section>
 
       <section id="right_side">
-        This is the right side
+        <p>This is the right side</p>
         <template id="student">
-          <tr>
-            <td data-field="expelled" data-expelled="false"></td>
-            <td data-field="firstname">First Name</td>
-            <td data-field="lastname">Last Name</td>
-            <td data-field="house">House</td>
-          </tr>
+          <article>
+            <div class="img-container">
+              <img src="" alt="" class="picture" />
+            </div>
+            <h2 class="first-name"></h2>
+            <h2 class="last-name"></h2>
+            <p class="house"></p>
+          </article>
         </template>
       </section>
     </div>
