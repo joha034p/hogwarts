@@ -18,28 +18,33 @@
           <button class="filter" data-action="filter" data-filter="hufflepuff">Hufflepuff</button>
           <button class="filter" data-action="filter" data-filter="ravenclaw">Ravenclaw</button>
           <button class="filter" data-action="filter" data-filter="gryffindor">Gryffindor</button>
-          <button class="filter" data-action="filter" data-filter="expelled">Expelled students</button>
-          <button class="filter" data-action="filter" data-filter="*">All</button>
+          <button class="filter" data-action="filter" data-filter="*">all</button>
         </p>
 
-        <p>
-          Sort By: <br />
-          <button class="sort" data-action="sort" data-sort-direction="asc" data-sort="firstname">First Name</button>
-          <button class="sort" data-action="sort" data-sort-direction="asc" data-sort="lastname">Last Name</button>
-          <button class="sort" data-action="sort" data-sort-direction="asc" data-sort="house">House</button>
-        </p>
+        <table id="list">
+          <thead>
+            <tr id="sorting">
+              Sort By:
+              <br />
+              <th data-action="sort" data-sort-direction="asc" data-sort="firstname">First Name</th>
+              <th data-action="sort" data-sort-direction="asc" data-sort="lastname">Last Name</th>
+              <th data-action="sort" data-sort-direction="asc" data-sort="house">House</th>
+            </tr>
+          </thead>
+          <tbody></tbody>
+        </table>
       </section>
 
       <section id="right_side">
-        <p>This is the right side</p>
+        <div id="student_list">
+          <!-- student template will be inserted here -->
+        </div>
         <template id="student">
           <article>
-            <div class="img-container">
-              <img src="" alt="" class="picture" />
-            </div>
-            <h2 class="first-name"></h2>
-            <h2 class="last-name"></h2>
-            <p class="house"></p>
+            <p class="first-name" data-field="firstname">FIRST NAME</p>
+            <!-- <p class="mid-name" data-field="midname">MID NAME</p> -->
+            <p class="last-name" data-field="lastname">LAST NAME</p>
+            <p class="house" data-field="house">HOUSE</p>
           </article>
         </template>
       </section>

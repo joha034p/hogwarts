@@ -20,3 +20,32 @@ body {
 #section_wrapper {
   display: flex;
 }
+
+#student_list {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+  grid-gap: 10px;
+  margin: 0 auto;
+  padding: 10px;
+}
+
+article {
+  display: grid;
+  border: 1px solid black;
+  position: relative;
+}
+
+.first-name,
+.last-name {
+  font-size: 1.5em;
+  font-weight: 545;
+}
+
+.last-name {
+  grid-column: 2;
+}
+
+/* classes */
+#sorting th.sortby {
+  text-decoration: underline;
+}
