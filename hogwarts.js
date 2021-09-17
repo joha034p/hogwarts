@@ -13,12 +13,12 @@ const Student = {
 
 const settings = {
   filterBy: "all",
-  sortBy: "firstname",
+  sortBy: "firstName",
   sortDir: "asc",
 };
 
 function start() {
-  console.log("ready");
+  console.log("function 'start' ready");
   registerButtons();
   loadJSON();
 }
@@ -52,24 +52,27 @@ function preparedObject(jsonObject) {
 
   const firstCap = txtSplit[0].substring(0, 1).toUpperCase();
   const firstLower = txtSplit[0].substring(1).toLowerCase();
-  student.firstName = firstCap + firstLower;
+  const fixedFirst = firstCap + firstLower;
+  student.firstName = fixedFirst;
 
   if (txtLength > 2) {
     const midCap = txtSplit[1].substring(0, 1).toUpperCase();
     const midLower = txtSplit[1].substring(1).toLowerCase();
-    student.midName = midCap + midLower;
+    const fixedMid = midCap + midLower;
+    student.midName = fixedMid;
   }
 
   const getLastName = trimName.substring(trimName.lastIndexOf(" ") + 1);
   const lastCap = getLastName.substring(0, 1).toUpperCase();
   const lastLower = getLastName.substring(1).toLowerCase();
-  student.lastName = lastCap + lastLower;
+  const fixedLast = lastCap + lastLower;
+  student.lastName = fixedLast;
 
   const trimHouse = jsonObject.house.trim();
   const houseCap = trimHouse.substring(0, 1).toUpperCase();
   const houseLower = trimHouse.substring(1).toLowerCase();
-  student.house = houseCap + houseLower;
-  console.log(student);
+  const fixedHouse = houseCap + houseLower;
+  student.house = fixedHouse;
   return student;
 }
 
@@ -100,29 +103,29 @@ function filterList(filteredList) {
 
 function isGryffindor(student) {
   console.log("isGryffindor");
-  return student.house === "gryffindor";
+  return student.house === "Gryffindor";
 }
 
 function isSlytherin(student) {
   console.log("isSlytherin");
-  return student.house === "slytherin";
+  return student.house === "Slytherin";
 }
 
 function isRavenclaw(student) {
   console.log("isRavenclaw");
-  return student.house === "ravenclaw";
+  return student.house === "Ravenclaw";
 }
 
 function isHufflepuff(student) {
   console.log("isHufflepuff");
-  return student.house === "hufflepuff";
+  return student.house === "Hufflepuff";
 }
 
 function selectSort(event) {
   const sortBy = event.target.dataset.sort;
   const sortDir = event.target.dataset.sortDirection;
 
-  //   Find old sortBy element, and remove .sortBy
+  //   Find old sortBy element, and remove .sortby
   const oldElement = document.querySelector(`[data-sort='${settings.sortBy}']`);
   oldElement.classList.remove("sortby");
 
@@ -155,8 +158,8 @@ function sortList(sortedList) {
 
   sortedList = sortedList.sort(sortByProperty);
 
-  function sortByProperty(animalA, animalB) {
-    if (animalA[settings.sortBy] < animalB[settings.sortBy]) {
+  function sortByProperty(studentA, studentB) {
+    if (studentA[settings.sortBy] < studentB[settings.sortBy]) {
       return -1 * direction;
     } else {
       return 1 * direction;

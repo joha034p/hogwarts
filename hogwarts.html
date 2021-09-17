@@ -10,15 +10,14 @@
   <body>
     <div id="section_wrapper">
       <section id="left_side">
-        <p>This is the left side</p>
         <h1 id="title">Hogwarts Students</h1>
         <p>
           Filter By: <br />
+          <button class="filter" data-action="filter" data-filter="gryffindor">Gryffindor</button>
           <button class="filter" data-action="filter" data-filter="slytherin">Slytherin</button>
           <button class="filter" data-action="filter" data-filter="hufflepuff">Hufflepuff</button>
           <button class="filter" data-action="filter" data-filter="ravenclaw">Ravenclaw</button>
-          <button class="filter" data-action="filter" data-filter="gryffindor">Gryffindor</button>
-          <button class="filter" data-action="filter" data-filter="*">all</button>
+          <button class="filter" data-action="filter" data-filter="*">All</button>
         </p>
 
         <table id="list">
@@ -26,8 +25,8 @@
             <tr id="sorting">
               Sort By:
               <br />
-              <th data-action="sort" data-sort-direction="asc" data-sort="firstname">First Name</th>
-              <th data-action="sort" data-sort-direction="asc" data-sort="lastname">Last Name</th>
+              <th data-action="sort" data-sort-direction="asc" data-sort="firstName">First name</th>
+              <th data-action="sort" data-sort-direction="asc" data-sort="lastName">Last name</th>
               <th data-action="sort" data-sort-direction="asc" data-sort="house">House</th>
             </tr>
           </thead>
