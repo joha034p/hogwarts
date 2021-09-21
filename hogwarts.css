@@ -1,20 +1,30 @@
+/* Global */
 body {
   margin: 0;
 }
 
-#left_side,
-#right_side {
-  border: 1px solid black;
-}
-
+/* Student List */
+/* left side */
 #left_side {
   width: 30%;
   height: 100vh;
+  position: fixed;
 }
 
+#left_content {
+  margin: 20px;
+}
+
+#title {
+  font-size: 3rem;
+}
+
+/* right side */
 #right_side {
   width: 70%;
   height: 100%;
+  left: 30%;
+  position: absolute;
 }
 
 #section_wrapper {
@@ -23,29 +33,97 @@ body {
 
 #student_list {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+  grid-template-columns: repeat(auto-fill, minmax(310px, 1fr));
   grid-gap: 10px;
   margin: 0 auto;
   padding: 10px;
 }
 
-article {
+#article {
   display: grid;
-  border: 1px solid black;
+  box-shadow: 1px 1px 6px #333;
+  border-radius: 5px;
   position: relative;
+  cursor: pointer;
 }
 
-.first-name,
-.last-name {
+.txt_wrapper {
+  margin: 10px;
+}
+
+.full-name {
   font-size: 1.5em;
   font-weight: 545;
+  margin: 0;
 }
 
 .last-name {
   grid-column: 2;
 }
+/*  */
 
-/* classes */
-#sorting th.sortby {
-  text-decoration: underline;
+/* Pop Up Window */
+.modal {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background-color: rgba(0, 0, 0, 0.6);
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
+
+#student_info {
+  box-shadow: 1px 1px 10px #333;
+  border-radius: 12px;
+  padding: 2em;
+  background-color: rgb(228, 228, 228);
+  position: relative;
+}
+
+#closebutton {
+  position: absolute;
+  right: -1em;
+  top: -1em;
+  border-radius: 50%;
+  width: 2em;
+  height: 2em;
+  cursor: pointer;
+}
+/*  */
+
+/* Classes */
+#sorting button.sortby {
+  font-weight: 900;
+}
+
+.hide {
+  visibility: hidden;
+}
+
+.gryffindor_color {
+  border-width: 3px;
+  border-left-style: solid;
+  border-image: linear-gradient(to bottom, #b60000, rgba(0, 0, 0, 0)) 1 100%;
+}
+
+.slytherin_color {
+  border-width: 3px;
+  border-left-style: solid;
+  border-image: linear-gradient(to bottom, #008000, rgba(0, 0, 0, 0)) 1 100%;
+}
+
+.ravenclaw_color {
+  border-width: 3px;
+  border-left-style: solid;
+  border-image: linear-gradient(to bottom, #000a7b, rgba(0, 0, 0, 0)) 1 100%;
+}
+
+.hufflepuff_color {
+  border-width: 3px;
+  border-left-style: solid;
+  border-image: linear-gradient(to bottom, #cbba00, rgba(0, 0, 0, 0)) 1 100%;
+}
+/*  */

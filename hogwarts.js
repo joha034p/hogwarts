@@ -9,6 +9,7 @@ const Student = {
   midName: "",
   lastName: "",
   house: "",
+  bloodStatus: "",
 };
 
 const settings = {
@@ -185,11 +186,39 @@ function displayStudent(student) {
   // create clone
   const clone = document.querySelector("template#student").content.cloneNode(true);
   // set clone data
-  clone.querySelector("[data-field=firstname]").textContent = student.firstName;
-  //   clone.querySelector("[data-field=midname]").textContent = student.midName;
-  clone.querySelector("[data-field=lastname]").textContent = student.lastName;
+  clone.querySelector("[data-field=fullname]").textContent = `${student.firstName} ${student.midName} ${student.lastName}`;
   clone.querySelector("[data-field=house]").textContent = student.house;
+  clone.querySelector("#article").addEventListener("mousedown", showPopUp);
+
+  function showPopUp() {
+    document.querySelector("#popup_window").classList.remove("hide");
+    document.querySelector("#closebutton").addEventListener("mousedown", closePopUp);
+    document.querySelector("#student_info [data-field=fullname]").textContent = `${student.firstName} ${student.midName} ${student.lastName}`;
+    document.querySelector("#student_info [data-field=house]").textContent = student.house;
+
+    function closePopUp() {
+      document.querySelector("#popup_window").classList.add("hide");
+    }
+  }
+
+  //   houseColors(student);
 
   //   append clone to list
   document.querySelector("#student_list").appendChild(clone);
 }
+
+// function houseColors(student) {
+//   const article = document.querySelector("#article");
+//   if (student.house === "Gryffindor") {
+//     article.classList.add("gryffindor_color");
+//   }
+//   if (student.house === "Slytherin") {
+//     article.classList.add("slytherin_color");
+//   }
+//   if (student.house === "Ravenclaw") {
+//     article.classList.add("ravenclaw_color");
+//   }
+//   if (student.house === "Hufflepuff") {
+//     article.classList.add("hufflepuff_color");
+//   }
+// }

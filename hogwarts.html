@@ -10,28 +10,30 @@
   <body>
     <div id="section_wrapper">
       <section id="left_side">
-        <h1 id="title">Hogwarts Students</h1>
-        <p>
-          Filter By: <br />
-          <button class="filter" data-action="filter" data-filter="gryffindor">Gryffindor</button>
-          <button class="filter" data-action="filter" data-filter="slytherin">Slytherin</button>
-          <button class="filter" data-action="filter" data-filter="hufflepuff">Hufflepuff</button>
-          <button class="filter" data-action="filter" data-filter="ravenclaw">Ravenclaw</button>
-          <button class="filter" data-action="filter" data-filter="*">All</button>
-        </p>
+        <div id="left_content">
+          <h1 id="title">Hogwarts Student List</h1>
+          <div id="filtering">
+            Filter By: <br />
+            <button class="filter" data-action="filter" data-filter="gryffindor">Gryffindor</button>
+            <button class="filter" data-action="filter" data-filter="slytherin">Slytherin</button>
+            <button class="filter" data-action="filter" data-filter="hufflepuff">Hufflepuff</button>
+            <button class="filter" data-action="filter" data-filter="ravenclaw">Ravenclaw</button>
+            <button class="filter" data-action="filter" data-filter="*">All</button>
+          </div>
 
-        <table id="list">
-          <thead>
-            <tr id="sorting">
-              Sort By:
-              <br />
-              <th data-action="sort" data-sort-direction="asc" data-sort="firstName">First name</th>
-              <th data-action="sort" data-sort-direction="asc" data-sort="lastName">Last name</th>
-              <th data-action="sort" data-sort-direction="asc" data-sort="house">House</th>
-            </tr>
-          </thead>
-          <tbody></tbody>
-        </table>
+          <table id="list">
+            <thead>
+              <div id="sorting">
+                Sort By:
+                <br />
+                <button data-action="sort" data-sort-direction="asc" data-sort="firstName">First name</tbuttonh>
+                <button data-action="sort" data-sort-direction="asc" data-sort="lastName">Last name</button>
+                <button data-action="sort" data-sort-direction="asc" data-sort="house">House</button>
+                </div>
+            </thead>
+            <tbody></tbody>
+          </table>
+        </div>
       </section>
 
       <section id="right_side">
@@ -39,13 +41,27 @@
           <!-- student template will be inserted here -->
         </div>
         <template id="student">
-          <article>
-            <p class="first-name" data-field="firstname">FIRST NAME</p>
-            <!-- <p class="mid-name" data-field="midname">MID NAME</p> -->
-            <p class="last-name" data-field="lastname">LAST NAME</p>
-            <p class="house" data-field="house">HOUSE</p>
+          <article id="article">
+            <div class="txt_wrapper">
+              <p class="full-name" data-field="fullname">FULL NAME</p>
+              <p class="house" data-field="house">HOUSE</p>
+            </div>
           </article>
         </template>
+        <div id="popup_window" class="modal hide">
+          <div id="student_info">
+            <button id="closebutton">X</button>
+            <p class="full-name" data-field="fullname">FULL NAME</p>
+            <p class="house" data-field="house">HOUSE</p>
+            <p class="bloodtype" data-field="bloodtype">BLOODTYPE</p>
+            <p class="expelled" data-field="expelled">EXPELLED</p>
+            <p class="inquisitorial_squad" data-field="inquisitorial_squad">INQUISITORIAL SQUAD</p>
+            <div class="button_choice">
+              <button id="expel_student">Expel <span data-field="expel_student">student</span></button>
+              <button id="appoint_student">Appoint <span data-field="appoint_student">student</span></button>
+            </div>
+          </div>
+        </div>
       </section>
     </div>
 
