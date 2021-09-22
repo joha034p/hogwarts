@@ -3,13 +3,15 @@ window.addEventListener("DOMContentLoaded", start);
 
 let allStudents = [];
 
+let bloodData;
+
 // the prototype for all students:
 const Student = {
   firstName: "",
   midName: "",
   lastName: "",
   house: "",
-  bloodStatus: "",
+  bloodType: "",
 };
 
 const settings = {
@@ -33,13 +35,17 @@ async function loadJSON() {
   const response = await fetch("https://petlatkea.dk/2021/hogwarts/students.json");
   const jsonData = await response.json();
 
+  const response2 = await fetch("https://petlatkea.dk/2021/hogwarts/families.json");
+  const jsonData2 = await response2.json();
+
+  bloodData = jsonData2;
+
   // when loaded, prepare data objects
   prepareObjects(jsonData);
 }
 
-function prepareObjects(jsonData) {
-  allStudents = jsonData.map(preparedObject);
-
+function prepareObjects(studentData) {
+  allStudents = studentData.map(preparedObject);
   // sort on the first load!
   buildList();
 }
@@ -74,6 +80,20 @@ function preparedObject(jsonObject) {
   const houseLower = trimHouse.substring(1).toLowerCase();
   const fixedHouse = houseCap + houseLower;
   student.house = fixedHouse;
+
+  preparedBlood(student, bloodData);
+  // function that defines each student's blood type
+  function preparedBlood(student, bloodData) {
+    const halfBloods = bloodData.half;
+    if (halfBloods.includes(student.lastName)) {
+      console.log("half-blood");
+      student.bloodType = "Blood Type: Half-Blood";
+    } else {
+      console.log("pure-blood");
+      student.bloodType = "Blood Type: Pure-Blood";
+    }
+  }
+
   return student;
 }
 
@@ -188,6 +208,7 @@ function displayStudent(student) {
   // set clone data
   clone.querySelector("[data-field=fullname]").textContent = `${student.firstName} ${student.midName} ${student.lastName}`;
   clone.querySelector("[data-field=house]").textContent = student.house;
+  clone.querySelector("[data-field=blood]").textContent = student.bloodType;
   clone.querySelector("#article").addEventListener("mousedown", showPopUp);
 
   function showPopUp() {
@@ -195,6 +216,7 @@ function displayStudent(student) {
     document.querySelector("#closebutton").addEventListener("mousedown", closePopUp);
     document.querySelector("#student_info [data-field=fullname]").textContent = `${student.firstName} ${student.midName} ${student.lastName}`;
     document.querySelector("#student_info [data-field=house]").textContent = student.house;
+    document.querySelector("#student_info [data-field=bloodtype]").textContent = student.bloodType;
 
     function closePopUp() {
       document.querySelector("#popup_window").classList.add("hide");
