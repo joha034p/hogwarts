@@ -2,6 +2,7 @@
 window.addEventListener("DOMContentLoaded", start);
 
 let allStudents = [];
+let expelledStudents = [];
 
 let bloodData;
 
@@ -12,6 +13,7 @@ const Student = {
   lastName: "",
   house: "",
   bloodType: "",
+  expelled: "Not expelled",
 };
 
 const settings = {
@@ -86,10 +88,8 @@ function preparedObject(jsonObject) {
   function preparedBlood(student, bloodData) {
     const halfBloods = bloodData.half;
     if (halfBloods.includes(student.lastName)) {
-      console.log("half-blood");
       student.bloodType = "Blood Type: Half-Blood";
     } else {
-      console.log("pure-blood");
       student.bloodType = "Blood Type: Pure-Blood";
     }
   }
@@ -209,18 +209,38 @@ function displayStudent(student) {
   clone.querySelector("[data-field=fullname]").textContent = `${student.firstName} ${student.midName} ${student.lastName}`;
   clone.querySelector("[data-field=house]").textContent = student.house;
   clone.querySelector("[data-field=blood]").textContent = student.bloodType;
+  //   if (student.expelled === "Expelled") {
+  clone.querySelector("[data-field=expelled]").textContent = student.expelled;
+  //   }
   clone.querySelector("#article").addEventListener("mousedown", showPopUp);
 
+  //   function that shows popup info about each student
   function showPopUp() {
     document.querySelector("#popup_window").classList.remove("hide");
+    document.querySelector("#student_info [data-field=popup_fullname]").textContent = `${student.firstName} ${student.midName} ${student.lastName}`;
+    document.querySelector("#student_info [data-field=popup_house]").textContent = student.house;
+    document.querySelector("#student_info [data-field=popup_bloodtype]").textContent = student.bloodType;
     document.querySelector("#closebutton").addEventListener("mousedown", closePopUp);
-    document.querySelector("#student_info [data-field=fullname]").textContent = `${student.firstName} ${student.midName} ${student.lastName}`;
-    document.querySelector("#student_info [data-field=house]").textContent = student.house;
-    document.querySelector("#student_info [data-field=bloodtype]").textContent = student.bloodType;
+    document.querySelector("#button_expel").addEventListener("mousedown", clickExpel);
+  }
 
-    function closePopUp() {
-      document.querySelector("#popup_window").classList.add("hide");
+  function closePopUp() {
+    document.querySelector("#popup_window").classList.add("hide");
+  }
+
+  //  function that changes "expelled" status
+  //  also removes the student from the list array
+  //  and adds them to the expelledStudents array
+  function clickExpel() {
+    console.log("click expel");
+    let currentStudent = allStudents.indexOf(student);
+    if (student.expelled === "Not expelled") {
+      student.expelled = `Expelled`;
+      console.log(currentStudent);
+      expelledStudents.push(currentStudent);
+      allStudents.splice(currentStudent, 1);
     }
+    buildList();
   }
 
   //   houseColors(student);

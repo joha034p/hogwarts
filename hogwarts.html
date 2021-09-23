@@ -37,32 +37,34 @@
       </section>
 
       <section id="right_side">
+          <div id="popup_window" class="modal hide">
+            <div id="student_info">
+              <button id="closebutton">X</button>
+              <p class="full-name" data-field="popup_fullname">FULL NAME</p>
+              <p class="house" data-field="popup_house">HOUSE</p>
+              <p class="bloodtype" data-field="popup_bloodtype">BLOODTYPE</p>
+              <p class="inquisitorial_squad" data-field="popup_inquisitorial_squad">INQUISITORIAL SQUAD</p>
+              <p class="expelled" data-field="expelled"></p>
+              <div class="button_choice">
+                <button id="button_expel"><span data-field="button_expel">Expel student</span></button>
+                <button id="appoint_student"><span data-field="appoint_student">Appoint student</span></button>
+              </div>
+            </div>
+          </div> 
         <div id="student_list">
           <!-- student template will be inserted here -->
         </div>
-        <template id="student">
+        <template id="student"> 
           <article id="article">
             <div class="txt_wrapper">
               <p class="full-name" data-field="fullname">FULL NAME</p>
               <p class="house" data-field="house">HOUSE</p>
-              <p class="blood" data-field="blood">blood</p>
+              <p class="blood" data-field="blood">BLOOD</p>
+              <p class="expelled" data-field="expelled"></p>
             </div>
           </article>
-        </template>
-        <div id="popup_window" class="modal hide">
-          <div id="student_info">
-            <button id="closebutton">X</button>
-            <p class="full-name" data-field="fullname">FULL NAME</p>
-            <p class="house" data-field="house">HOUSE</p>
-            <p class="bloodtype" data-field="bloodtype">BLOODTYPE</p>
-            <p class="expelled" data-field="expelled">EXPELLED</p>
-            <p class="inquisitorial_squad" data-field="inquisitorial_squad">INQUISITORIAL SQUAD</p>
-            <div class="button_choice">
-              <button id="expel_student">Expel <span data-field="expel_student">student</span></button>
-              <button id="appoint_student">Appoint <span data-field="appoint_student">student</span></button>
-            </div>
-          </div>
-        </div>
+        </template> 
+         
       </section>
     </div>
 
