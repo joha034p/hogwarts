@@ -40,6 +40,7 @@ async function loadJSON() {
   const response2 = await fetch("https://petlatkea.dk/2021/hogwarts/families.json");
   const jsonData2 = await response2.json();
 
+  // store bloodtype data in global variable
   bloodData = jsonData2;
 
   // when loaded, prepare data objects
@@ -88,9 +89,9 @@ function preparedObject(jsonObject) {
   function preparedBlood(student, bloodData) {
     const halfBloods = bloodData.half;
     if (halfBloods.includes(student.lastName)) {
-      student.bloodType = "Blood Type: Half-Blood";
+      student.bloodType = "Half-Blood";
     } else {
-      student.bloodType = "Blood Type: Pure-Blood";
+      student.bloodType = "Pure-Blood";
     }
   }
 
@@ -99,7 +100,7 @@ function preparedObject(jsonObject) {
 
 function selectFilter(event) {
   const filter = event.target.dataset.filter;
-  console.log(`User selected ${filter}`);
+  console.log(`Filter by: ${filter}`);
   setFilter(filter);
 }
 
@@ -118,9 +119,10 @@ function filterList(filteredList) {
     filteredList = allStudents.filter(isRavenclaw);
   } else if (settings.filterBy === "hufflepuff") {
     filteredList = allStudents.filter(isHufflepuff);
-  } else if (settings.filterBy === "Expelled") {
-    filteredList = allStudents.filter(isExpelled);
   }
+  //   else if (settings.filterBy === "Expelled") {
+  //     filteredList = allStudents.filter(isExpelled);
+  //   }
   return filteredList;
 }
 
@@ -144,10 +146,10 @@ function isHufflepuff(student) {
   return student.house === "Hufflepuff";
 }
 
-function isExpelled(student) {
-  console.log("isExpelled");
-  return student.expelled === "Expelled";
-}
+// function isExpelled(student) {
+//   console.log("isExpelled");
+//   return student.expelled === "Expelled";
+// }
 
 function selectSort(event) {
   const sortBy = event.target.dataset.sort;
@@ -166,7 +168,7 @@ function selectSort(event) {
   } else {
     event.target.dataset.sortDirection = "asc";
   }
-  console.log(`User selected ${sortBy} - ${sortDir}`);
+  console.log(`Sort by: ${sortBy} - ${sortDir}`);
   setSort(sortBy, sortDir);
 }
 
@@ -207,6 +209,15 @@ function displayList(students) {
   document.querySelector("#student_list").innerHTML = "";
   // build a new list
   students.forEach(displayStudent);
+  document.querySelector("#show_expelled").addEventListener("mousedown", displayExpelled);
+}
+
+// function that only displays expelled students
+function displayExpelled() {
+  document.querySelector("#student_list").innerHTML = "";
+  expelledStudents.forEach(displayStudent);
+  const expelledLen = expelledStudents.length;
+  document.querySelector("#student_count").textContent = `Showing ${expelledLen} students`;
 }
 
 function displayStudent(student) {
@@ -214,20 +225,21 @@ function displayStudent(student) {
   const clone = document.querySelector("template#student").content.cloneNode(true);
   // set clone data
   clone.querySelector("[data-field=fullname]").textContent = `${student.firstName} ${student.midName} ${student.lastName}`;
-  clone.querySelector("[data-field=house]").textContent = student.house;
-  clone.querySelector("[data-field=blood]").textContent = student.bloodType;
-  //   if (student.expelled === "Expelled") {
-  clone.querySelector("[data-field=expelled]").textContent = student.expelled;
-  //   }
+  clone.querySelector("[data-field=house]").textContent = `House: ${student.house}`;
+  if (student.expelled === "Expelled") {
+    clone.querySelector("[data-field=expelled]").textContent = student.expelled;
+  }
   clone.querySelector("#article").addEventListener("mousedown", showPopUp);
 
   //   function that shows popup info about each student
   function showPopUp() {
     document.querySelector("#popup_window").classList.remove("hide");
     document.querySelector("#student_info [data-field=popup_fullname]").textContent = `${student.firstName} ${student.midName} ${student.lastName}`;
-    document.querySelector("#student_info [data-field=popup_house]").textContent = student.house;
-    document.querySelector("#student_info [data-field=popup_bloodtype]").textContent = student.bloodType;
-    document.querySelector("#student_info [data-field=expelled]").textContent = student.expelled;
+    document.querySelector("#student_info [data-field=popup_house]").textContent = `House: ${student.house}`;
+    document.querySelector("#student_info [data-field=popup_bloodtype]").textContent = `Blood type: ${student.bloodType}`;
+    if (student.expelled === "Expelled") {
+      document.querySelector("#student_info [data-field=expelled]").textContent = student.expelled;
+    }
     document.querySelector("#closebutton").addEventListener("mousedown", closePopUp);
     document.querySelector("#button_expel").addEventListener("mousedown", clickExpel);
   }
@@ -246,11 +258,19 @@ function displayStudent(student) {
     if (student.expelled === "Not expelled") {
       student.expelled = `Expelled`;
       console.log(`${currentStudent.firstName} is expelled`);
+      console.log(expelledStudents);
       expelledStudents.push(currentStudent);
       allStudents.splice(findStudent, 1);
       closePopUp();
     }
     buildList();
+  }
+
+  //   NOT DONE! function that shows how many students are shown
+  studentCount();
+  function studentCount() {
+    const studentLen = allStudents.length;
+    document.querySelector("#student_count").textContent = `Showing ${studentLen} students`;
   }
 
   //   houseColors(student);

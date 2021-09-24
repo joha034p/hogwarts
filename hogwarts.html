@@ -18,7 +18,7 @@
             <button class="filter" data-action="filter" data-filter="slytherin">Slytherin</button>
             <button class="filter" data-action="filter" data-filter="hufflepuff">Hufflepuff</button>
             <button class="filter" data-action="filter" data-filter="ravenclaw">Ravenclaw</button>
-            <button class="filter" data-action="filter" data-filter="expelled">Expelled</button>
+            <!-- <button class="filter" data-action="filter" data-filter="expelled">Expelled</button> -->
             <button class="filter" data-action="filter" data-filter="*">All</button>
           </div>
 
@@ -34,6 +34,11 @@
             </thead>
             <tbody></tbody>
           </table>
+           Show expelled students:
+          <button id="show_expelled">Expelled students</button>
+          <div id="student_count">
+              <p class="count"></p>
+          </div>
         </div>
       </section>
 
@@ -60,7 +65,7 @@
             <div class="txt_wrapper">
               <p class="full-name" data-field="fullname">FULL NAME</p>
               <p class="house" data-field="house">HOUSE</p>
-              <p class="blood" data-field="blood">BLOOD</p>
+              <p class="blood" data-field="blood"></p>
               <p class="expelled" data-field="expelled"></p>
             </div>
           </article>

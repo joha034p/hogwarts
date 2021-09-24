@@ -45,6 +45,7 @@ body {
   border-radius: 5px;
   position: relative;
   cursor: pointer;
+  background-color: #f1feff;
 }
 
 .txt_wrapper {
