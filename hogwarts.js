@@ -118,6 +118,8 @@ function filterList(filteredList) {
     filteredList = allStudents.filter(isRavenclaw);
   } else if (settings.filterBy === "hufflepuff") {
     filteredList = allStudents.filter(isHufflepuff);
+  } else if (settings.filterBy === "Expelled") {
+    filteredList = allStudents.filter(isExpelled);
   }
   return filteredList;
 }
@@ -140,6 +142,11 @@ function isRavenclaw(student) {
 function isHufflepuff(student) {
   console.log("isHufflepuff");
   return student.house === "Hufflepuff";
+}
+
+function isExpelled(student) {
+  console.log("isExpelled");
+  return student.expelled === "Expelled";
 }
 
 function selectSort(event) {
@@ -220,6 +227,7 @@ function displayStudent(student) {
     document.querySelector("#student_info [data-field=popup_fullname]").textContent = `${student.firstName} ${student.midName} ${student.lastName}`;
     document.querySelector("#student_info [data-field=popup_house]").textContent = student.house;
     document.querySelector("#student_info [data-field=popup_bloodtype]").textContent = student.bloodType;
+    document.querySelector("#student_info [data-field=expelled]").textContent = student.expelled;
     document.querySelector("#closebutton").addEventListener("mousedown", closePopUp);
     document.querySelector("#button_expel").addEventListener("mousedown", clickExpel);
   }
@@ -233,12 +241,14 @@ function displayStudent(student) {
   //  and adds them to the expelledStudents array
   function clickExpel() {
     console.log("click expel");
-    let currentStudent = allStudents.indexOf(student);
+    let findStudent = allStudents.indexOf(student);
+    let currentStudent = allStudents[findStudent];
     if (student.expelled === "Not expelled") {
       student.expelled = `Expelled`;
-      console.log(currentStudent);
+      console.log(`${currentStudent.firstName} is expelled`);
       expelledStudents.push(currentStudent);
-      allStudents.splice(currentStudent, 1);
+      allStudents.splice(findStudent, 1);
+      closePopUp();
     }
     buildList();
   }
