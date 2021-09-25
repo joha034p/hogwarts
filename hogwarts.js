@@ -8,6 +8,7 @@ let bloodData;
 
 // the prototype for all students:
 const Student = {
+  picture: "",
   firstName: "",
   midName: "",
   lastName: "",
@@ -84,8 +85,8 @@ function preparedObject(jsonObject) {
   const fixedHouse = houseCap + houseLower;
   student.house = fixedHouse;
 
-  preparedBlood(student, bloodData);
   // function that defines each student's blood type
+  preparedBlood(student, bloodData);
   function preparedBlood(student, bloodData) {
     const halfBloods = bloodData.half;
     if (halfBloods.includes(student.lastName)) {
@@ -94,6 +95,12 @@ function preparedObject(jsonObject) {
       student.bloodType = "Pure-Blood";
     }
   }
+
+  //    preparedPictures(student);
+  //    function preparedPictures(student) {
+  //   IF the student's lastname + "_" + firstname's first character + ".png" === /images/filename
+  //   THEN student.picture = /images/-thispngfile-
+  //   }
 
   return student;
 }
@@ -110,7 +117,8 @@ function setFilter(filter) {
 }
 
 function filterList(filteredList) {
-  // Create a filtered list of only gryffindor/slytherin/ravenclaw/hufflepuff
+  // create a filtered list of only gryffindor/slytherin/ravenclaw/hufflepuff
+  // also show count of students on each filter
   if (settings.filterBy === "gryffindor") {
     filteredList = allStudents.filter(isGryffindor);
   } else if (settings.filterBy === "slytherin") {
@@ -120,36 +128,36 @@ function filterList(filteredList) {
   } else if (settings.filterBy === "hufflepuff") {
     filteredList = allStudents.filter(isHufflepuff);
   }
-  //   else if (settings.filterBy === "Expelled") {
-  //     filteredList = allStudents.filter(isExpelled);
-  //   }
   return filteredList;
 }
 
 function isGryffindor(student) {
   console.log("isGryffindor");
+  const countGryf = allStudents.filter((student) => student.house === "Gryffindor").length;
+  document.querySelector("#student_count").textContent = `Showing ${countGryf} students`;
   return student.house === "Gryffindor";
 }
 
 function isSlytherin(student) {
   console.log("isSlytherin");
+  const countSlyth = allStudents.filter((student) => student.house === "Slytherin").length;
+  document.querySelector("#student_count").textContent = `Showing ${countSlyth} students`;
   return student.house === "Slytherin";
 }
 
 function isRavenclaw(student) {
   console.log("isRavenclaw");
+  const countRav = allStudents.filter((student) => student.house === "Ravenclaw").length;
+  document.querySelector("#student_count").textContent = `Showing ${countRav} students`;
   return student.house === "Ravenclaw";
 }
 
 function isHufflepuff(student) {
   console.log("isHufflepuff");
+  const countHuf = allStudents.filter((student) => student.house === "Hufflepuff").length;
+  document.querySelector("#student_count").textContent = `Showing ${countHuf} students`;
   return student.house === "Hufflepuff";
 }
-
-// function isExpelled(student) {
-//   console.log("isExpelled");
-//   return student.expelled === "Expelled";
-// }
 
 function selectSort(event) {
   const sortBy = event.target.dataset.sort;
@@ -266,12 +274,12 @@ function displayStudent(student) {
     buildList();
   }
 
-  //   NOT DONE! function that shows how many students are shown
-  studentCount();
-  function studentCount() {
-    const studentLen = allStudents.length;
-    document.querySelector("#student_count").textContent = `Showing ${studentLen} students`;
-  }
+  //   NOT DONE! SHOW COUNT OF STUDENTS ON FIRST LOAD
+  //   studentCount();
+  //   function studentCount() {
+  //     const studentLen = allStudents.length;
+  //     document.querySelector("#student_count").textContent = `Showing ${studentLen} students`;
+  //   }
 
   //   houseColors(student);
 
