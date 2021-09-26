@@ -16,6 +16,7 @@ const Student = {
   bloodType: "",
   expelled: "Not expelled",
   prefect: "Not a prefect",
+  inquisitorial: "Not a Inquisitorial Squad member",
 };
 
 const settings = {
@@ -276,9 +277,17 @@ function displayStudent(student) {
       document.querySelector("#student_info [data-field=prefect]").textContent = ``;
       document.querySelector("#prefect_button").textContent = "Appoint as prefect";
     }
+    if (student.inquisitorial === `${student.firstName} is a member of the Inquisitorial Squad`) {
+      document.querySelector("#student_info [data-field=inquisitorial_squad]").textContent = student.inquisitorial;
+      document.querySelector("#inq_button").textContent = "Remove from Inquisitorial Squad";
+    } else {
+      document.querySelector("#student_info [data-field=inquisitorial_squad]").textContent = ``;
+      document.querySelector("#inq_button").textContent = "Appoint to Inquisitorial Squad";
+    }
     document.querySelector("#closebutton").addEventListener("mousedown", closePopUp);
     document.querySelector("#button_expel").addEventListener("mousedown", clickExpel);
     document.querySelector("#prefect_button").addEventListener("mousedown", clickPrefect);
+    document.querySelector("#inq_button").addEventListener("mousedown", clickInquisitorial);
   }
 
   function closePopUp() {
@@ -313,8 +322,29 @@ function displayStudent(student) {
       student.prefect = "Not a prefect";
       console.log(`${student.firstName} is not a prefect`);
     }
-    showPopUp();
     buildList();
+    showPopUp();
+  }
+
+  function clickInquisitorial() {
+    if (student.inquisitorial === "Not a Inquisitorial Squad member") {
+      tryToMakeInqMember(student);
+    } else {
+      student.inquisitorial = "Not a Inquisitorial Squad member";
+      console.log(`${student.firstName} is not a Inquisitorial Squad member`);
+    }
+    buildList();
+    showPopUp();
+  }
+
+  function tryToMakeInqMember() {
+    if (student.bloodType === "Pure-Blood" || student.house === "Slytherin") {
+      student.inquisitorial = `${student.firstName} is a member of the Inquisitorial Squad`;
+      console.log(`${student.firstName} is a member of the Inquisitorial Squad`);
+    } else {
+      alert(`Students must be Pure-Blood or be in the Slytherin house to join the Inquisitorial Squad.`);
+      console.log(`${student.firstName} cannot join the Inquisitorial Squad.`);
+    }
   }
 
   houseColors(student);
