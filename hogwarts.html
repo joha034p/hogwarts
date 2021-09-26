@@ -6,12 +6,16 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Hogwarts</title>
     <link rel="stylesheet" href="hogwarts.css" />
+    <link href="https://fonts.googleapis.com/css2?family=Istok+Web&display=swap" rel="stylesheet">
   </head>
   <body>
     <div id="section_wrapper">
       <section id="left_side">
         <div id="left_content">
           <h1 id="title">Hogwarts Student List</h1>
+          <div id="search">
+            <input id="search_bar" type="text" placeholder="Search..."/>
+        </div>
           <div id="filtering">
             Filter By: <br />
             <button class="filter" data-action="filter" data-filter="gryffindor">Gryffindor</button>
@@ -42,30 +46,33 @@
       </section>
 
       <section id="right_side">
-          <div id="popup_window" class="modal hide">
-            <div id="student_info">
-              <button id="closebutton">X</button>
-              <p class="full-name" data-field="popup_fullname">FULL NAME</p>
-              <p class="house" data-field="popup_house">HOUSE</p>
-              <p class="bloodtype" data-field="popup_bloodtype">BLOODTYPE</p>
-              <p class="inquisitorial_squad" data-field="popup_inquisitorial_squad">INQUISITORIAL SQUAD</p>
-              <p class="expelled" data-field="expelled"></p>
-              <div class="button_choice">
-                <button id="button_expel"><span data-field="button_expel">Expel student</span></button>
-                <button id="appoint_student"><span data-field="appoint_student">Appoint student</span></button>
-              </div>
-            </div>
-          </div> 
+          
         <div id="student_list">
           <!-- student template will be inserted here -->
         </div>
         <template id="student"> 
+            <div id="popup_window" class="modal hide">
+                <div id="student_info">
+                  <button id="closebutton">X</button>
+                  <p class="student_pic" data-field="student_pic"></p>
+                  <p class="full-name" data-field="popup_fullname"></p>
+                  <p class="house" data-field="popup_house"></p>
+                  <p class="bloodtype" data-field="popup_bloodtype"></p>
+                  <p class="prefect" data-field="prefect" data-prefect="false"></p>
+                  <p class="inquisitorial_squad" data-field="popup_inquisitorial_squad"></p>
+                  <p class="expelled" data-field="expelled"></p>
+                  <div class="button_choice">
+                    <button id="button_expel">Expel student</button>
+                    <button id="prefect_button">Appoint as prefect</button>
+                    <button id="inq_button">Appoint to inq squad</button>
+                  </div>
+                </div>
+              </div> 
           <article id="article">
             <div class="txt_wrapper">
               <p class="student_pic" data-field="student_pic"></p>
-              <p class="full-name" data-field="fullname">FULL NAME</p>
-              <p class="house" data-field="house">HOUSE</p>
-              <p class="blood" data-field="blood"></p>
+              <p class="full-name" data-field="fullname"></p>
+              <p class="house" data-field="house"></p>
               <p class="expelled" data-field="expelled"></p>
             </div>
           </article>

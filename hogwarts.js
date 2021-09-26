@@ -3,7 +3,6 @@ window.addEventListener("DOMContentLoaded", start);
 
 let allStudents = [];
 let expelledStudents = [];
-
 let bloodData;
 
 // the prototype for all students:
@@ -15,6 +14,7 @@ const Student = {
   house: "",
   bloodType: "",
   expelled: "Not expelled",
+  prefect: "Not a prefect",
 };
 
 const settings = {
@@ -105,6 +105,20 @@ function preparedObject(jsonObject) {
   return student;
 }
 
+// NOT DONE! works in console.log but cant get it to display the list
+// function that makes it possible to search for specific students
+function search() {
+  const searchBar = document.querySelector("#search_bar");
+  searchBar.addEventListener("keyup", (e) => {
+    const searchString = e.target.value.toLowerCase();
+    const filteredCharacters = allStudents.filter((student) => {
+      return student.firstName.toLowerCase().includes(searchString);
+    });
+    console.log(filteredCharacters);
+    displayList(filteredCharacters);
+  });
+}
+
 function selectFilter(event) {
   const filter = event.target.dataset.filter;
   console.log(`Filter by: ${filter}`);
@@ -127,6 +141,9 @@ function filterList(filteredList) {
     filteredList = allStudents.filter(isRavenclaw);
   } else if (settings.filterBy === "hufflepuff") {
     filteredList = allStudents.filter(isHufflepuff);
+  } else {
+    const studentLen = allStudents.length;
+    document.querySelector("#student_count").textContent = `Showing ${studentLen} students`;
   }
   return filteredList;
 }
@@ -210,6 +227,7 @@ function buildList() {
   const currentList = filterList(allStudents);
   const sortedList = sortList(currentList);
   displayList(sortedList);
+  search();
 }
 
 function displayList(students) {
@@ -248,8 +266,16 @@ function displayStudent(student) {
     if (student.expelled === "Expelled") {
       document.querySelector("#student_info [data-field=expelled]").textContent = student.expelled;
     }
+    if (student.prefect === `${student.firstName} is a prefect`) {
+      document.querySelector("#student_info [data-field=prefect]").textContent = student.prefect;
+      document.querySelector("#prefect_button").textContent = "Remove as prefect";
+    } else {
+      document.querySelector("#student_info [data-field=prefect]").textContent = ``;
+      document.querySelector("#prefect_button").textContent = "Appoint as prefect";
+    }
     document.querySelector("#closebutton").addEventListener("mousedown", closePopUp);
     document.querySelector("#button_expel").addEventListener("mousedown", clickExpel);
+    document.querySelector("#prefect_button").addEventListener("mousedown", clickPrefect);
   }
 
   function closePopUp() {
@@ -274,6 +300,17 @@ function displayStudent(student) {
     buildList();
   }
 
+  function clickPrefect() {
+    if (student.prefect === "Not a prefect") {
+      student.prefect = `${student.firstName} is a prefect`;
+      console.log(`${student.firstName} is a prefect`);
+    } else {
+      student.prefect = "Not a prefect";
+      console.log(`${student.firstName} is not a prefect`);
+    }
+    showPopUp();
+  }
+
   //   NOT DONE! SHOW COUNT OF STUDENTS ON FIRST LOAD
   //   studentCount();
   //   function studentCount() {
@@ -281,24 +318,23 @@ function displayStudent(student) {
   //     document.querySelector("#student_count").textContent = `Showing ${studentLen} students`;
   //   }
 
-  //   houseColors(student);
+  houseColors(student);
+  function houseColors(student) {
+    const article = clone.querySelector("#article");
+    if (student.house === "Gryffindor") {
+      article.classList.add("gryffindor_color");
+    }
+    if (student.house === "Slytherin") {
+      article.classList.add("slytherin_color");
+    }
+    if (student.house === "Ravenclaw") {
+      article.classList.add("ravenclaw_color");
+    }
+    if (student.house === "Hufflepuff") {
+      article.classList.add("hufflepuff_color");
+    }
+  }
 
   //   append clone to list
   document.querySelector("#student_list").appendChild(clone);
 }
-
-// function houseColors(student) {
-//   const article = document.querySelector("#article");
-//   if (student.house === "Gryffindor") {
-//     article.classList.add("gryffindor_color");
-//   }
-//   if (student.house === "Slytherin") {
-//     article.classList.add("slytherin_color");
-//   }
-//   if (student.house === "Ravenclaw") {
-//     article.classList.add("ravenclaw_color");
-//   }
-//   if (student.house === "Hufflepuff") {
-//     article.classList.add("hufflepuff_color");
-//   }
-// }
