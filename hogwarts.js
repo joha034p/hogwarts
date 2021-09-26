@@ -6,6 +6,16 @@ let expelledStudents = [];
 let bloodData;
 let imgPath = [];
 
+// my object, which gets displayed when hacking the system
+const myObject = {
+  firstName: "Johan",
+  midName: "Santaolalla Rives",
+  lastName: "Larsen",
+  house: "Gryffindor",
+  bloodType: "Pure-Blood",
+  expelled: "Not expelled",
+};
+
 // the prototype for all students:
 const Student = {
   picture: "",
@@ -34,6 +44,7 @@ function start() {
 function registerButtons() {
   document.querySelectorAll("[data-action='filter']").forEach((button) => button.addEventListener("mousedown", selectFilter));
   document.querySelectorAll("[data-action='sort']").forEach((button) => button.addEventListener("mousedown", selectSort));
+  document.querySelector("#hack_the_system").addEventListener("mousedown", hackSystem);
 }
 
 async function loadJSON() {
@@ -108,6 +119,15 @@ function preparedObject(jsonObject) {
   //   }
 
   return student;
+}
+
+// function that hacks the system
+// inserts myself as a student - who cant be expelled
+// randomizes blood statuses
+// students cannot be appointed to the inquisitorial squad
+function hackSystem() {
+  allStudents.push(myObject);
+  buildList();
 }
 
 // function that makes it possible to search for specific students
@@ -298,11 +318,15 @@ function displayStudent(student) {
   //  function that expels students
   //  removes the student from the allStudents array
   //  adds them to the expelledStudents array
+  //   cannot expel "Johan"
   function clickExpel() {
     console.log("click expel");
     let findStudent = allStudents.indexOf(student);
     let currentStudent = allStudents[findStudent];
-    if (student.expelled === "Not expelled") {
+    if (student.firstName === "Johan") {
+      student.expelled = "Not expelled";
+      alert("Whoopsie - can't expel the hacker!");
+    } else if (student.expelled === "Not expelled") {
       student.expelled = `Expelled`;
       console.log(`${currentStudent.firstName} is expelled`);
       console.log(expelledStudents);
@@ -311,6 +335,7 @@ function displayStudent(student) {
       closePopUp();
     }
     buildList();
+    showPopUp();
   }
 
   function clickPrefect() {
