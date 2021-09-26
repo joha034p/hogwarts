@@ -112,7 +112,7 @@ function search() {
   searchBar.addEventListener("keyup", (e) => {
     const searchString = e.target.value.toLowerCase();
     const filteredCharacters = allStudents.filter((student) => {
-      return student.firstName.toLowerCase().includes(searchString);
+      return student.firstName.toLowerCase().includes(searchString) || student.midName.toLowerCase().includes(searchString) || student.lastName.toLowerCase().includes(searchString) || student.house.toLowerCase().includes(searchString);
     });
     console.log(filteredCharacters);
     displayList(filteredCharacters);
