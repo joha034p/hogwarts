@@ -379,6 +379,13 @@ function displayStudent(student) {
       alert(`Students must be Pure-Blood or be in the Slytherin house to join the Inquisitorial Squad.`);
       console.log(`${student.firstName} cannot join the Inquisitorial Squad.`);
     }
+
+    if (hacked === true)
+      setTimeout(() => {
+        alert("Students cannot be appointed as Inquisitorial Squad members, because of a recent hacking incident.");
+        student.inquisitorial = `${student.firstName} is not a Inquisitorial Squad member`;
+        showPopUp();
+      }, 1000);
   }
 
   houseColors(student);
