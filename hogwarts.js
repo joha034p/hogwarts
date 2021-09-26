@@ -4,6 +4,7 @@ window.addEventListener("DOMContentLoaded", start);
 let allStudents = [];
 let expelledStudents = [];
 let bloodData;
+let imgPath = [];
 
 // the prototype for all students:
 const Student = {
@@ -96,16 +97,18 @@ function preparedObject(jsonObject) {
     }
   }
 
-  //    preparedPictures(student);
-  //    function preparedPictures(student) {
-  //   IF the student's lastname + "_" + firstname's first character + ".png" === /images/filename
-  //   THEN student.picture = /images/-thispngfile-
+  //   NOT DONE! find out how to get the files from "images/" folder
+  //   preparedPictures();
+  //   function preparedPictures() {
+  //     const studentImgs = "images/";
+  //     if (student.lastName.toLowerCase + "_" + student.firstName.charAt(0).toLowerCase + ".png" === studentImgs) {
+  //       student.picture = studentImgs;
+  //     }
   //   }
 
   return student;
 }
 
-// NOT DONE! works in console.log but cant get it to display the list
 // function that makes it possible to search for specific students
 function search() {
   const searchBar = document.querySelector("#search_bar");
@@ -114,7 +117,6 @@ function search() {
     const filteredCharacters = allStudents.filter((student) => {
       return student.firstName.toLowerCase().includes(searchString) || student.midName.toLowerCase().includes(searchString) || student.lastName.toLowerCase().includes(searchString) || student.house.toLowerCase().includes(searchString);
     });
-    console.log(filteredCharacters);
     displayList(filteredCharacters);
   });
 }
@@ -250,6 +252,7 @@ function displayStudent(student) {
   // create clone
   const clone = document.querySelector("template#student").content.cloneNode(true);
   // set clone data
+  clone.querySelector("[data-field=student_pic]").innerHTML = student.picture;
   clone.querySelector("[data-field=fullname]").textContent = `${student.firstName} ${student.midName} ${student.lastName}`;
   clone.querySelector("[data-field=house]").textContent = `House: ${student.house}`;
   if (student.expelled === "Expelled") {
@@ -280,11 +283,12 @@ function displayStudent(student) {
 
   function closePopUp() {
     document.querySelector("#popup_window").classList.add("hide");
+    buildList();
   }
 
-  //  function that changes "expelled" status
-  //  also removes the student from the list array
-  //  and adds them to the expelledStudents array
+  //  function that expels students
+  //  removes the student from the allStudents array
+  //  adds them to the expelledStudents array
   function clickExpel() {
     console.log("click expel");
     let findStudent = allStudents.indexOf(student);
@@ -302,6 +306,7 @@ function displayStudent(student) {
 
   function clickPrefect() {
     if (student.prefect === "Not a prefect") {
+      tryToMakePrefect(student);
       student.prefect = `${student.firstName} is a prefect`;
       console.log(`${student.firstName} is a prefect`);
     } else {
@@ -309,14 +314,8 @@ function displayStudent(student) {
       console.log(`${student.firstName} is not a prefect`);
     }
     showPopUp();
+    buildList();
   }
-
-  //   NOT DONE! SHOW COUNT OF STUDENTS ON FIRST LOAD
-  //   studentCount();
-  //   function studentCount() {
-  //     const studentLen = allStudents.length;
-  //     document.querySelector("#student_count").textContent = `Showing ${studentLen} students`;
-  //   }
 
   houseColors(student);
   function houseColors(student) {
@@ -337,4 +336,64 @@ function displayStudent(student) {
 
   //   append clone to list
   document.querySelector("#student_list").appendChild(clone);
+}
+
+// function that should prevent user from selecting more than 2 prefects pr. house
+function tryToMakePrefect(selectedStudent) {
+  const prefects = allStudents.filter((student) => student.prefect === `${student.firstName} is a prefect`);
+  const other = prefects.filter((student) => student.house === selectedStudent.house).shift();
+
+  // If there is more than 2 of the same house
+  if (other !== undefined) {
+    removeAorB(prefects[0], prefects[1]);
+    console.log("There can only be 2 prefects of each house!");
+  } else {
+    makePrefect(selectedStudent);
+  }
+
+  function removeAorB(prefectA, prefectB) {
+    // Ask the user to ignore, or remove A or B
+    document.querySelector("#remove_aorb").classList.remove("hide");
+    document.querySelector("#remove_aorb .closebutton").addEventListener("click", closeDialog);
+    document.querySelector("#remove_aorb #removea").addEventListener("click", clickRemoveA);
+    document.querySelector("#remove_aorb #removeb").addEventListener("click", clickRemoveB);
+
+    // Show names on buttons
+    document.querySelector("#remove_aorb [data-field=prefectA]").textContent = prefectA.firstName;
+    document.querySelector("#remove_aorb [data-field=prefectB]").textContent = prefectB.firstName;
+
+    // If ignore - do nothing
+    function closeDialog() {
+      document.querySelector("#remove_aorb").classList.add("hide");
+      document.querySelector("#remove_aorb .closebutton").removeEventListener("click", closeDialog);
+      document.querySelector("#remove_aorb #removea").removeEventListener("click", clickRemoveA);
+      document.querySelector("#remove_aorb #removeb").removeEventListener("click", clickRemoveB);
+    }
+
+    function clickRemoveA() {
+      // If remove A:
+      removePrefect(prefectA);
+      makePrefect(selectedStudent);
+      buildList();
+      closeDialog();
+    }
+
+    function clickRemoveB() {
+      // Else - if remove B
+      removePrefect(prefectB);
+      makePrefect(selectedStudent);
+      buildList();
+      closeDialog();
+    }
+
+    // If ignore - do nothing
+  }
+
+  function removePrefect(prefectStudent) {
+    prefectStudent.prefect = "Not a prefect";
+  }
+
+  function makePrefect(student) {
+    student.prefect = `${student.firstName} is a prefect`;
+  }
 }

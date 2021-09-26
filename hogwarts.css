@@ -62,6 +62,11 @@ p {
   margin: 10px;
 }
 
+.img_wrapper {
+  width: 100%;
+  height: auto;
+}
+
 .full-name {
   font-family: harryPFont;
   font-size: 2em;
@@ -85,6 +90,27 @@ p {
   justify-content: center;
   align-items: center;
   z-index: 100;
+}
+
+.prefect_modal {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background-color: rgba(0, 0, 0, 0.6);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 101;
+}
+
+.dialog {
+  box-shadow: 1px 1px 10px #333;
+  border-radius: 12px;
+  padding: 2em;
+  background-color: rgb(231, 198, 198);
+  position: relative;
 }
 
 #student_info {
