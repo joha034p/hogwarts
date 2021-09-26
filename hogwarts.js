@@ -5,6 +5,7 @@ let allStudents = [];
 let expelledStudents = [];
 let bloodData;
 let imgPath = [];
+let hacked = false;
 
 // my object, which gets displayed when hacking the system
 const myObject = {
@@ -12,7 +13,7 @@ const myObject = {
   midName: "Santaolalla Rives",
   lastName: "Larsen",
   house: "Gryffindor",
-  bloodType: "Pure-Blood",
+  bloodType: "Pure-blood",
   expelled: "Not expelled",
 };
 
@@ -44,7 +45,6 @@ function start() {
 function registerButtons() {
   document.querySelectorAll("[data-action='filter']").forEach((button) => button.addEventListener("mousedown", selectFilter));
   document.querySelectorAll("[data-action='sort']").forEach((button) => button.addEventListener("mousedown", selectSort));
-  document.querySelector("#hack_the_system").addEventListener("mousedown", hackSystem);
 }
 
 async function loadJSON() {
@@ -103,9 +103,9 @@ function preparedObject(jsonObject) {
   function preparedBlood(student, bloodData) {
     const halfBloods = bloodData.half;
     if (halfBloods.includes(student.lastName)) {
-      student.bloodType = "Half-Blood";
+      student.bloodType = "Half-blood";
     } else {
-      student.bloodType = "Pure-Blood";
+      student.bloodType = "Pure-blood";
     }
   }
 
@@ -119,15 +119,6 @@ function preparedObject(jsonObject) {
   //   }
 
   return student;
-}
-
-// function that hacks the system
-// inserts myself as a student - who cant be expelled
-// randomizes blood statuses
-// students cannot be appointed to the inquisitorial squad
-function hackSystem() {
-  allStudents.push(myObject);
-  buildList();
 }
 
 // function that makes it possible to search for specific students
@@ -259,6 +250,19 @@ function displayList(students) {
   // build a new list
   students.forEach(displayStudent);
   document.querySelector("#show_expelled").addEventListener("mousedown", displayExpelled);
+  document.querySelector("#hack_the_system").addEventListener("mousedown", hackSystem);
+}
+
+// function that hacks the system
+// inserts myself as a student - who cant be expelled
+// randomizes bloodtypes
+// students cannot be appointed to the inquisitorial squad
+function hackSystem() {
+  hacked = true;
+  allStudents.push(myObject);
+  buildList();
+  console.log("System is hacked! Look out for manipulated blood types, intruders and other weird stuff..");
+  alert("System is hacked! Look out for manipulated blood types, intruders and other weird stuff..");
 }
 
 // function that only displays expelled students
@@ -273,9 +277,14 @@ function displayStudent(student) {
   // create clone
   const clone = document.querySelector("template#student").content.cloneNode(true);
   // set clone data
-  clone.querySelector("[data-field=student_pic]").innerHTML = student.picture;
+  //   clone.querySelector("[data-field=student_pic]").innerHTML = student.picture;
   clone.querySelector("[data-field=fullname]").textContent = `${student.firstName} ${student.midName} ${student.lastName}`;
   clone.querySelector("[data-field=house]").textContent = `House: ${student.house}`;
+  //   if system is hacked = students get random bloodtypes
+  if (hacked === true) {
+    randomizeBlood(student);
+    clone.querySelector("[data-field=blood]").textContent = `Bloodtype: ${student.bloodType}`;
+  }
   if (student.expelled === "Expelled") {
     clone.querySelector("[data-field=expelled]").textContent = student.expelled;
   }
@@ -391,6 +400,16 @@ function displayStudent(student) {
 
   //   append clone to list
   document.querySelector("#student_list").appendChild(clone);
+}
+
+function randomizeBlood(student) {
+  if (student.bloodType === "Half-blood") {
+    student.bloodType = "Pure-blood";
+  } else {
+    let bloodArray = ["Pure-blood", "Half-blood", "Muggle-blood"];
+    let randomBlood = Math.floor(Math.random() * Math.floor(3));
+    student.bloodType = bloodArray[randomBlood];
+  }
 }
 
 // function that should prevent user from selecting more than 2 prefects pr. house
