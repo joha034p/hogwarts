@@ -277,7 +277,7 @@ function displayStudent(student) {
   // create clone
   const clone = document.querySelector("template#student").content.cloneNode(true);
   // set clone data
-  //   clone.querySelector("[data-field=student_pic]").innerHTML = student.picture;
+  clone.querySelector("[data-field=student_pic]").innerHTML = student.picture;
   clone.querySelector("[data-field=fullname]").textContent = `${student.firstName} ${student.midName} ${student.lastName}`;
   clone.querySelector("[data-field=house]").textContent = `House: ${student.house}`;
   //   if system is hacked = students get random bloodtypes
@@ -298,6 +298,7 @@ function displayStudent(student) {
     document.querySelector("#student_info [data-field=popup_bloodtype]").textContent = `Blood type: ${student.bloodType}`;
     if (student.expelled === "Expelled") {
       document.querySelector("#student_info [data-field=expelled]").textContent = student.expelled;
+      document.querySelector("#button_expel").classList.add("hide");
     }
     if (student.prefect === `${student.firstName} is a prefect`) {
       document.querySelector("#student_info [data-field=prefect]").textContent = student.prefect;

@@ -17,7 +17,7 @@
             <input id="search_bar" type="text" placeholder="Search..."/>
         </div>
           <div id="filtering">
-            Filter By: <br />
+            <p>Filter By:<br/></p>
             <button class="filter" data-action="filter" data-filter="gryffindor">Gryffindor</button>
             <button class="filter" data-action="filter" data-filter="slytherin">Slytherin</button>
             <button class="filter" data-action="filter" data-filter="hufflepuff">Hufflepuff</button>
@@ -28,8 +28,7 @@
           <table id="list">
             <thead>
               <div id="sorting">
-                Sort By:
-                <br />
+               <p>Sort By:<br/></p>
                 <button data-action="sort" data-sort-direction="asc" data-sort="firstName">First name</tbuttonh>
                 <button data-action="sort" data-sort-direction="asc" data-sort="lastName">Last name</button>
                 <button data-action="sort" data-sort-direction="asc" data-sort="house">House</button>
@@ -37,17 +36,20 @@
             </thead>
             <tbody></tbody>
           </table>
-           Show expelled students:
+          <div id="expelled_txt">
+          <p>Show expelled students:<br></p>
           <button id="show_expelled">Expelled students</button>
+        </div>
           <div id="student_count">
               <p class="count"></p>
           </div>
-          <button id="hack_the_system">Hack the system!</button>
+          <div id="hack_wrapper">
+            <button id="hack_the_system"></button>
+          </div>
         </div>
       </section>
 
       <section id="right_side">
-          
         <div id="student_list">
           <!-- student template will be inserted here -->
         </div>
